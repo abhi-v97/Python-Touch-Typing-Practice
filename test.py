@@ -1,14 +1,7 @@
 #file for quick code tests
-from main import elapsedTime
+import re
+x = "hello world, my name is abhishek"
 
+y = re.findall(r"[\w']+|[.,!?;]", x)
 
-prompt = "The quick brown fox jumped over the lazy dog"
-print("Type this: ", prompt)
-
-input("Press Enter to begin: ")
-
-stime = time()
-inprompt = input()
-etime = time()
-
-time = round(elapsedTime(stime, etime), 2)
+print(y)

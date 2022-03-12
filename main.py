@@ -1,11 +1,14 @@
 from time import time  # keep track of time
+import re
 
 #Error function
 def typeError(prompt):
     global inwords
 
     error = 0
-    words = prompt.split()
+    words = re.findall(r"[\w']+|[.,!?;]", prompt)
+
+    print("prompt = ", words)
 
     for i in range(len(inwords)):
         if i in (0, len(inwords)-1):
@@ -27,7 +30,7 @@ def speed(inprompt, stime, etime):
     global time
     global inwords
 
-    inwords = inprompt.split()
+    inwords = re.findall(r"[\w']+|[.,!?;]", inprompt)
     twords = len(inwords)
     speed = twords / time
 
@@ -40,23 +43,23 @@ def elapsedTime(stime, etime):
 
     return time
 
+if __name__ == "__main__":
+    prompt = "The quick brown fox jumps over the lazy dog"
+    print("Type this: ", prompt)
 
-prompt = "The quick brown fox jumped over the lazy dog"
-print("Type this: ", prompt)
+    input("Press Enter then start typing: ")
 
-input("Press Enter then start typing: ")
+    stime = time()
+    inprompt = input()
+    etime = time()
 
-stime = time()
-inprompt = input()
-etime = time()
+    time = round(elapsedTime(stime, etime), 2)
+    speed = speed(inprompt, stime, etime)
+    errors = typeError(prompt)
 
-time = round(elapsedTime(stime, etime), 2)
-speed = speed(inprompt, stime, etime)
-errors = typeError(prompt)
-
-#print the data
-print("#######################")
-print("Total time: ", time, "seconds")
-print("Average Typing Speed: ", speed, "words per minute")
-print("With total of ", errors, "errors.")
-print("#######################")
+    #print the data
+    print("#######################")
+    print("Total time: ", time, "seconds")
+    print("Average Typing Speed: ", speed, "words per minute")
+    print("With total of ", errors, "errors.")
+    print("#######################")

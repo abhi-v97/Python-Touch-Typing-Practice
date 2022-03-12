@@ -1,37 +1,49 @@
 from time import time  # keep track of time
 import re
+import csv
+import random
+
+# Source for quotes - https://gist.github.com/JakubPetriska/060958fd744ca34f099e947cd080b540
 
 #Error function
 def typeError(prompt):
-    global inwords
+    global input
+    
 
-    error = 0
     words = re.findall(r"[\w']+|[.,!?;]", prompt)
 
     print("prompt = ", words)
+    print("output = ", input)
 
-    for i in range(len(inwords)):
-        if i in (0, len(inwords)-1):
-            if inwords[i] == words[i]:
-                continue
-            else:
-                error += 1
-        else:
-            if inwords[i] == words[i]:
-                continue
-            else:
-                error += 1
+    error = input.copy()
 
-    return error
+    for i in range(len(input)):
+        
+        if (input[i] in words):
+            error.remove(input[i])
+
+    missed_word = abs(len(words) - len(input))
+    res = missed_word + len(error)
+
+    return res
+
+def quotes():
+    with open("quotes.csv") as f:
+        reader = csv.reader(f,delimiter = ",")
+        data = list(reader)
+
+    quote = data[random.randint(1, len(data) - 1)][1]
+
+    return quote
 
 #Speed function
 
 def speed(inprompt, stime, etime):
     global time
-    global inwords
+    global input
 
-    inwords = re.findall(r"[\w']+|[.,!?;]", inprompt)
-    twords = len(inwords)
+    input = re.findall(r"[\w']+|[.,!?;]", inprompt)
+    twords = len(input)
     speed = twords / time
 
     return speed
@@ -44,7 +56,7 @@ def elapsedTime(stime, etime):
     return time
 
 if __name__ == "__main__":
-    prompt = "The quick brown fox jumps over the lazy dog"
+    prompt = quotes()
     print("Type this: ", prompt)
 
     input("Press Enter then start typing: ")

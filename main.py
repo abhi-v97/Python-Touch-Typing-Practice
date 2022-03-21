@@ -11,13 +11,11 @@ label.grid(column=0, row=0)
 def start():
     label.configure(text="Start typing!")
 
-btn = Button(window, text="Start!", command=start)
-btn.grid(column=2, row=0)
-
 text = Entry(window, width=10)
 text.grid(column=1, row=0)
 text.focus()
 
-
+btn = Button(window, text="Start!", command=start)
+btn.grid(column=2, row=0)
 
 window.mainloop()

@@ -1,77 +1,17 @@
-from time import time  # keep track of time
-import re
-import csv
-import random
+#file for quick code tests
+l1 =  ['When', 'you', 'doubt', 'your', 'power', ',', 'you', 'give', 'power', 'to', 'your', 'doubt', '.']
+l2 =  ['When', 'you', 'doubt', 'your', 'powwer', ',', 'you', 'give', 'power', 'to', 'your', 'doubt', '.']
 
-# Source for quotes - https://gist.github.com/JakubPetriska/060958fd744ca34f099e947cd080b540
+error = l2.copy()
 
-#Error function
-def typeError(prompt):
-    global input
+mistake = 0
+
+for i in range(len(l2)):
     
+    if (l2[i] in l1):
+        error.remove(l2[i])
 
-    words = re.findall(r"[\w']+|[.,!?;]", prompt)
+    print(i, "   ", mistake, "   ", error)
+res = mistake + len(error)
 
-    print("prompt = ", words)
-    print("output = ", input)
-
-    error = input.copy()
-
-    for i in range(len(input)):
-        
-        if (input[i] in words):
-            error.remove(input[i])
-
-    missed_word = abs(len(words) - len(input))
-    res = missed_word + len(error)
-
-    return res
-
-def quotes():
-    with open("quotes.csv") as f:
-        reader = csv.reader(f,delimiter = ",")
-        data = list(reader)
-
-    quote = data[random.randint(1, len(data) - 1)][1]
-
-    return quote
-
-#Speed function
-
-def speed(inprompt, stime, etime):
-    global time
-    global input
-
-    input = re.findall(r"[\w']+|[.,!?;]", inprompt)
-    twords = len(input)
-    speed = twords / time
-
-    return speed
-
-# Total time
-
-def elapsedTime(stime, etime):
-    time = etime - stime
-
-    return time
-
-if __name__ == "__main__":
-    prompt = quotes()
-    print("Type this: ", prompt)
-
-    input("Press Enter then start typing: ")
-
-    stime = time()
-    inprompt = input()
-    etime = time()
-
-    time = round(elapsedTime(stime, etime), 2)
-    speed = speed(inprompt, stime, etime)
-    errors = typeError(prompt)
-
-    #print the data
-    print("#######################")
-    print("Total time: ", time, "seconds")
-    print("Average Typing Speed: ", speed, "words per minute")
-    print("With total of ", errors, "errors.")
-    print("#######################")
+print(res)

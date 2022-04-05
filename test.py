@@ -1,17 +1,34 @@
-#file for quick code tests
-l1 =  ['When', 'you', 'doubt', 'your', 'power', ',', 'you', 'give', 'power', 'to', 'your', 'doubt', '.']
-l2 =  ['When', 'you', 'doubt', 'your', 'powwer', ',', 'you', 'give', 'power', 'to', 'your', 'doubt', '.']
+from tkinter import *
+from tkinter import font
 
-error = l2.copy()
+root = Tk()
+root.title('Font Families')
+fonts=list(font.families())
+fonts.sort()
 
-mistake = 0
+def populate(frame):
+    '''Put in the fonts'''
+    listnumber = 1
+    for item in fonts:
+        label = "listlabel" + str(listnumber)
+        label = Label(frame,text=item,font=(item, 16)).pack()
+        listnumber += 1
 
-for i in range(len(l2)):
-    
-    if (l2[i] in l1):
-        error.remove(l2[i])
+def onFrameConfigure(canvas):
+    '''Reset the scroll region to encompass the inner frame'''
+    canvas.configure(scrollregion=canvas.bbox("all"))
 
-    print(i, "   ", mistake, "   ", error)
-res = mistake + len(error)
+canvas = Canvas(root, borderwidth=0, background="#ffffff")
+frame = Frame(canvas, background="#ffffff")
+vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
+canvas.configure(yscrollcommand=vsb.set)
 
-print(res)
+vsb.pack(side="right", fill="y")
+canvas.pack(side="left", fill="both", expand=True)
+canvas.create_window((4,4), window=frame, anchor="nw")
+
+frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
+
+populate(frame)
+
+root.mainloop()

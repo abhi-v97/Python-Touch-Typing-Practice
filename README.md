@@ -7,3 +7,5 @@ Start typing when you're ready, ends when the quote is over or you press Enter.
 Keeps track of mistakes, time taken, and your highest wpm score.
 
 Built using Python.
+
+![Alt text - Demonstration](showoff.gif)

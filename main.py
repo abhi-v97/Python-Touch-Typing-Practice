@@ -80,7 +80,7 @@ def resetWritingLabels():
     # grab quote
     text = quotes().lower()
 
-    text = "the quick brown fox jumped over the lazy dog"
+    #text = "the quick brown fox jumped over the lazy dog"
 
     # defines the point where the text splits
     splitPoint = 0
